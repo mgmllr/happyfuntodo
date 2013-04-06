@@ -1,4 +1,12 @@
 Happyfuntodo::Application.routes.draw do
+  
+  as :user do
+    get "/login" => "devise/sessions#new"
+    delete "/logout" => "devise/sessions#destroy"
+  end
+
+  devise_for :users
+
   resources :items
 
   resources :lists do
