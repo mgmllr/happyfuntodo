@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Task:</b>
+  <%= @item.task %>
+</p>
+
+<p>
+  <b>Completed:</b>
+  <%= @item.completed %>
+</p>
+
+<p>
+  <b>List:</b>
+  <%= @item.list_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'Back', list_path(@item.list_id) %>

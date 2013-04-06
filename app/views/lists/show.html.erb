@@ -1,15 +1,20 @@
-<p id="notice"><%= notice %></p>
+<div class="headline">
+	<h1><%= @list.name %></h1>
+</div>
 
-<p>
-  <b>Name:</b>
-  <%= @list.name %>
-</p>
+<table class="table">
+<% @items.each do |item| %>
+	<tr>
+		<td><%= item.completed %></td>
+		<td><%= item.task %></td>
+	</tr>
+<% end %>
+</table>
 
-<p>
-  <b>User:</b>
-  <%= @list.user_id %>
-</p>
-
-
+<button class="btn btn-large btn-block">
+	<%= link_to 'New Item', new_list_item_path(@list) %>
+</button>
+<!-- 
 <%= link_to 'Edit', edit_list_path(@list) %> |
 <%= link_to 'Back', lists_path %>
+ -->
