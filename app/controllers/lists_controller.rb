@@ -16,12 +16,21 @@ class ListsController < ApplicationController
   # GET /lists/1
   # GET /lists/1.json
   def show
-    @list = List.find(params[:id])
-    @items = @list.items.all 
-
+    if session[:user]
+      @list = List.find(session[:id])
+      @items = @list.items.all
+    elsif params[:id]
+      @list = List.find(params[:id])
+      @items = @list.items.all
+    end
+     
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @list }
+      if @items
+        format.html # show.html.erb
+        format.json { render json: @list }
+      else
+        format.html { redirect_to new_user_session_path }
+      end
     end
   end
 

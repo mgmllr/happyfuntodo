@@ -1,0 +1,15 @@
+<h1>Greetings!!</h1>
+<p>Here's what you accomplished today:</p>
+<% @recently_completed.each do |i| %>
+	<ul>
+		<li><%= i.task %><li>
+	</ul>
+<% end %>
+<p>And here are the tasks you have yet to accomplish:</p>
+<% @uncompleted.each do |i| %>
+	<ul>
+		<li><%= i.task %><li>
+	</ul>
+<% end %>
+
+<%= link_to "Visit Your ToDo List", list_path(@list) %> <%= link_to "Unsubscribe", unsubscribe_path(@user) %>

@@ -6,11 +6,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :oauth_token, :oauth_expires_at, :email_subscription
   # attr_accessible :title, :body
 
   has_one :list, dependent: :destroy
   has_many :items, through: :list
+  
+  after_create :create_list
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
@@ -33,4 +35,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def create_list
+    list = List.create(user_id: self.id)
+  end
+
+  def daily_notification
+    users = User.where(:email_subscription => true) 
+    users.each do |user|
+      DailyMailer.items_update(user).deliver
+    end
+  end
 end

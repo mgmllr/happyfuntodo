@@ -1,6 +1,11 @@
 class ItemsController < ApplicationController
   
-  before_filter :authenticate_user!
+  attr_accessor :completed
+  before_filter :authenticate_user!, :find_list
+
+  def find_list
+    @list = List.find(params[:list_id])
+  end
 
   # GET /items
   # GET /items.json
@@ -27,7 +32,6 @@ class ItemsController < ApplicationController
   # GET /items/new
   # GET /items/new.json
   def new
-    @list = List.find(params[:list_id])
     @item = Item.new
 
     respond_to do |format|
@@ -38,23 +42,20 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
-    @list = List.find(params[:list_id]) 
     @item = Item.find(params[:id])
   end
 
   # POST /items
   # POST /items.json
   def create
-    @list = List.find(params[:list_id])
-    @item = Item.new(params[:item])
-    @item.list_id = params[:list_id]
+    @item = @list.items.new(params[:item])
 
     respond_to do |format|
       if @item.save
         format.html { redirect_to list_path(@list), notice: 'Item was successfully created.' }
         format.json { render json: @item, status: :created, location: @item }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to list_path(@list), notice: 'Could not add item at the time. Please try again.'}
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
@@ -86,5 +87,13 @@ class ItemsController < ApplicationController
       format.html { redirect_to items_url }
       format.json { head :no_content }
     end
+  end
+
+  def complete
+    @item = @list.items.find(params[:id])
+    @item.completed = true
+    @item.completed_at = Time.now
+    @item.save
+    redirect_to list_path(@list)
   end
 end

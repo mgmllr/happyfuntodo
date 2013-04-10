@@ -1,5 +1,8 @@
 Happyfuntodo::Application.routes.draw do
   
+  get "users/:id/subscribe" => 'users#subscribe_to_email', :as => :subscribe
+  get "users/:id/unsubscribe" => 'users#unsubscribe_to_email', :as => :unsubscribe
+
   as :user do
     get "/login" => "devise/sessions#new"
     delete "/logout" => "devise/sessions#destroy"
@@ -7,13 +10,16 @@ Happyfuntodo::Application.routes.draw do
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
+  post 'lists/:list_id' => 'items#create'
   resources :items
 
   resources :lists do
     resources :items
   end
 
-  root to: 'lists#index'
+  match 'lists/:list_id/items/:id/complete' => 'items#complete', :as => :complete_item
+
+  root to: 'lists#show'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
