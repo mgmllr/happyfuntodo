@@ -61,16 +61,21 @@
     </div>
 
     <div class="container">
+      <div class="content">
         <div class="row">
-          <div class="span9 todo-main" >
+          <div class="span7 todo-main" >
             <%= bootstrap_flash %>
             <%= yield %>
           </div>
+            <% if user_signed_in? %>
+              <%= render "lists/sidebar" %>
+            <% end %>
         </div><!--/row-->
+      </div><!--/content-->
       <hr>
       <footer>
         <div id="copyright">
-        <p>&copy; Company 2013</p>
+        <p>&copy; Max Miller 2013</p>
         <div>
       </footer>
 

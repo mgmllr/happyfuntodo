@@ -11,7 +11,11 @@ class User < ActiveRecord::Base
 
   has_one :list, dependent: :destroy
   has_many :items, through: :list
-  
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+  has_many :followed_users, through: :relationships, source: :followed
+  has_many :reverse_relationships, foreign_key: "followed_id", class_name: "Relationship", dependent: :destroy
+  has_many :followers, through: :relationships
+
   after_create :create_list
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
@@ -44,5 +48,17 @@ class User < ActiveRecord::Base
     users.each do |user|
       DailyMailer.items_update(user).deliver
     end
+  end
+
+  def following?(other_user)
+    relationships.find_by_followed_id(other_user.id)
+  end
+
+  def follow!(other_user)
+    relationships.create!(followed_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    relationships.find_by_followed_id(other_user.id).destroy
   end
 end

@@ -1,15 +1,13 @@
 <div class="headline">
-	<h1>Happy Fun To Do List!</h1>
+	<h1>To Do</h1>
 </div>
 
 <table class="table">
 <% @items.each do |item| %>
 	<% if item.completed == false %>
-		<tr>
-	<!-- 		<td><%= check_box_tag :completed, false, item.completed? %></td> -->
-			<td><%= item.task %> - <%= link_to "Complete", complete_item_path(@list.id, item.id) %></td>
-<!-- 			<td><%= link_to "Done", list_path, method: :delete, remote: true %></td>
- -->	</tr>
+		<%= content_tag_for(:tr, item)  do %>
+			<td><%= item.task %> - <%= link_to "Complete", complete_item_path(@list.id, item.id), remote: true %></td>
+		<% end %>
 	<% end %>
 <% end %>
 </table>
@@ -17,3 +15,4 @@
 <button class="btn btn-large btn-block">
 	<%= link_to 'New Item', new_list_item_path(@list) %>
 </button>
+

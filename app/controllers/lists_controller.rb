@@ -2,28 +2,18 @@ class ListsController < ApplicationController
   
   before_filter :authenticate_user!
 
-  # GET /lists
-  # GET /lists.json
-  def index
-    @lists = List.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @lists }
-    end
-  end
-
-  # GET /lists/1
-  # GET /lists/1.json
+  # Show List of To Do Items | Main Interface
   def show
     if session[:user]
+      @user = User.find(session[:user])
       @list = List.find(session[:id])
       @items = @list.items.all
     elsif params[:id]
       @list = List.find(params[:id])
       @items = @list.items.all
+      @user = User.find(@list.user_id)
     end
-     
+      
     respond_to do |format|
       if @items
         format.html # show.html.erb
@@ -34,63 +24,21 @@ class ListsController < ApplicationController
     end
   end
 
-  # GET /lists/new
-  # GET /lists/new.json
-  def new
-    @list = List.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @list }
-    end
-  end
-
-  # GET /lists/1/edit
-  def edit
+  def invite_user ### THIS NEEDS TO BE FIXED
+    ###Must validate that it's a valid email. 
     @list = List.find(params[:id])
-  end
-
-  # POST /lists
-  # POST /lists.json
-  def create
-    @list = List.new(params[:list])
+    inviter = User.find(@list.user_id)
+    email = User.find_by_email(params[:invitee])
+    FollowInviteMailer.invite(inviter, email)
 
     respond_to do |format|
-      if @list.save
-        format.html { redirect_to @list, notice: 'List was successfully created.' }
-        format.json { render json: @list, status: :created, location: @list }
+      if @email
+        format.html { redirect_to list_path(@list), notice: 'Item was successfully created.' }
+        format.json { render json: @item, status: :created, location: @item }
       else
-        format.html { render action: "new" }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
+        format.html { redirect_to list_path(@list), notice: 'Could not add item at the time. Please try again.'}
+        format.json { render json: @item.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # PUT /lists/1
-  # PUT /lists/1.json
-  def update
-    @list = List.find(params[:id])
-
-    respond_to do |format|
-      if @list.update_attributes(params[:list])
-        format.html { redirect_to @list, notice: 'List was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /lists/1
-  # DELETE /lists/1.json
-  def destroy
-    @list = List.find(params[:id])
-    @list.destroy
-
-    respond_to do |format|
-      format.html { redirect_to lists_url }
-      format.json { head :no_content }
     end
   end
 end
