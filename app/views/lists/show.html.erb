@@ -2,17 +2,15 @@
 	<h1>To Do</h1>
 </div>
 
-<table class="table">
+<table class="table table-striped">
 <% @items.each do |item| %>
 	<% if item.completed == false %>
-		<%= content_tag_for(:tr, item)  do %>
-			<td><%= item.task %> - <%= link_to "Complete", complete_item_path(@list.id, item.id), remote: true %></td>
-		<% end %>
+		<%= render item %>
 	<% end %>
 <% end %>
 </table>
 
-<button class="btn btn-large btn-block">
-	<%= link_to 'New Item', new_list_item_path(@list) %>
-</button>
+<% if current_user == @user %>
+	<%= render 'items/form' %>
+<% end %>
 

@@ -1,37 +1,42 @@
 class ItemsController < ApplicationController
   
-  before_filter :authenticate_user!, :find_list, :find_user
+  before_filter :authenticate_user!, :find_list
 
   def find_list
-    @list = List.find(params[:list_id])
-  end
-
-  def find_user
-    @user = User.find(@list.user_id)
-  end
-
-  # GET /items/new
-  # GET /items/new.json
-  def new
-    @item = Item.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @item }
+    if params[:list_id]
+      @list = List.find(params[:list_id])
+    else
+      @list = List.find(params[:id])
     end
   end
 
+  #def find_user
+  #  @user = User.find(@list.user_id)
+  #end
+
   # Create a new To Do list item
   def create
-    @item = @list.items.new(params[:item])
+    @item = Item.new(params[:item])
+    @item.list_id = params[:id]
+    @item.save
+
+    #respond_to do |format|
+    #  if @item.save
+    #    format.html { redirect_to list_path(@list), notice: 'Item was successfully created.' }
+    #    format.json { render json: @item, status: :created, location: @item }
+    #  else
+    #    format.html { redirect_to list_path(@list), notice: 'Could not add item at the time. Please try again.'}
+    #    format.json { render json: @item.errors, status: :unprocessable_entity }
+    #  end
+    #  format.js
+    #end
+    #
 
     respond_to do |format|
       if @item.save
-        format.html { redirect_to list_path(@list), notice: 'Item was successfully created.' }
-        format.json { render json: @item, status: :created, location: @item }
+        format.js
       else
         format.html { redirect_to list_path(@list), notice: 'Could not add item at the time. Please try again.'}
-        format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -48,6 +53,26 @@ class ItemsController < ApplicationController
     end
   end
 
+  def edit
+    @item = Item.find(params[:id])
+
+    respond_to do |format|
+      format.html # edit.html.erb
+      format.json { render json: @item }
+    end
+  end
+
+  def update
+    @item = Item.find(params[:id])
+
+    if @item.update_attributes(params[:item])
+      flash[:notice] = "Item was successfully updated"
+      redirect_to list_path(@list)
+    else
+
+    end
+  end
+
   # DELETE /items/1
   # DELETE /items/1.json
   def destroy
@@ -55,8 +80,7 @@ class ItemsController < ApplicationController
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to items_url }
-      format.json { head :no_content }
+      format.js
     end
   end
 

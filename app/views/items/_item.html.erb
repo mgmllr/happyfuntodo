@@ -1,0 +1,7 @@
+<%= content_tag_for(:tr, item)  do %>
+	<td class="task"><%= item.task %></td>
+	<td class="tick-mark"><%= link_to (image_tag "icons/Tick.png"), complete_item_path(@list.id, item.id), remote: true %></td>
+	<td class="edit"><%= link_to (image_tag "icons/Pencil.png"), edit_list_item_path(@list.id, item.id) %></td>
+	<td class="delete"><%= link_to (image_tag "icons/Cross.png"), list_item_path(@list.id, item.id), method: :delete, remote: true %></td>
+<% end %>
+

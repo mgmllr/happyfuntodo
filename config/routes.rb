@@ -1,24 +1,29 @@
 Happyfuntodo::Application.routes.draw do
   
+  get "registrations/new"
+
+  get "registrations/create"
+
+  get "registrations/update"
+
   get "users/:id/subscribe" => 'users#subscribe_to_email', :as => :subscribe
   get "users/:id/unsubscribe" => 'users#unsubscribe_to_email', :as => :unsubscribe
-  get "users/:id/follow" => 'users#follow_user', :as => :follow
-  
+  post "lists/invite" => 'lists#invite_user', :as => :invite
+  post "users/follow/" => 'user#create_follower', :as => :follow
+
   as :user do
     get "/login" => "devise/sessions#new"
     delete "/logout" => "devise/sessions#destroy"
   end
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", :registrations => "registrations" }
 
-  post 'lists/:list_id' => 'items#create'
-  resources :items
+  post 'lists/:id/items' => 'items#create', :as => :new_item
+  match 'lists/:list_id/items/:id/complete' => 'items#complete', :as => :complete_item
 
-  resources :lists do
+  resources :lists, only: :show do
     resources :items
   end
-
-  match 'lists/:list_id/items/:id/complete' => 'items#complete', :as => :complete_item
 
   root to: 'lists#show'
 

@@ -13,6 +13,7 @@ class ListsController < ApplicationController
       @items = @list.items.all
       @user = User.find(@list.user_id)
     end
+    @item = Item.new
       
     respond_to do |format|
       if @items
@@ -24,21 +25,20 @@ class ListsController < ApplicationController
     end
   end
 
-  def invite_user ### THIS NEEDS TO BE FIXED
-    ###Must validate that it's a valid email. 
-    @list = List.find(params[:id])
-    inviter = User.find(@list.user_id)
-    email = User.find_by_email(params[:invitee])
-    FollowInviteMailer.invite(inviter, email)
+  # def invite_user ### THIS NEEDS TO BE FIXED
+  #   inviter = current_user
+  #   ## Look up whether invitee already exists.
+  #   invitee = User.find_by_email(params[:invitee])
+  #   FollowInviteMailer.invite(inviter, invitee)
 
-    respond_to do |format|
-      if @email
-        format.html { redirect_to list_path(@list), notice: 'Item was successfully created.' }
-        format.json { render json: @item, status: :created, location: @item }
-      else
-        format.html { redirect_to list_path(@list), notice: 'Could not add item at the time. Please try again.'}
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #   respond_to do |format|
+  #     if invitee
+  #       format.html { redirect_to list_path(inviter.list), notice: 'Email was successfully sent.' }
+  #       format.json { render json: @item, status: :created, location: @item }
+  #     else
+  #       format.html { redirect_to list_path(inviter.list), notice: 'I\'m sorry, that user does not have an account.'}
+  #       format.json { render json: @item.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 end

@@ -1,4 +1,6 @@
 class FollowInviteMailer < ActionMailer::Base
+  helper :mailer
+
   default from: "from@example.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -6,10 +8,10 @@ class FollowInviteMailer < ActionMailer::Base
   #
   #   en.follow_invite_mailer.invite.subject
   #
-  def invite(inviter, email)
+  def invite(inviter, invitee)
     @inviter = inviter
-    @email = email
+    @invitee = invitee
 
-    mail to: @email, subject: "Your To Do App Invitation"
+    mail to: @invitee.email, subject: "Your To Do App Invitation"
   end
 end
