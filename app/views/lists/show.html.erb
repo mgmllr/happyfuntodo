@@ -1,16 +1,27 @@
-<div class="headline">
-	<h1>To Do</h1>
+<div class="span7 todo-main" >
+  <%= bootstrap_flash %>
+  
+  <div class="headline">
+		<h1>To Do</h1>
+	</div>
+
+	<table class="table table-striped">
+	<% @items.each do |item| %>
+		<% if item.completed == false %>
+			<%= render item %>
+		<% end %>
+	<% end %>
+	</table>
+
+	<% if current_user == @user %>
+		<%= render 'items/form' %>
+	<% end %>
 </div>
 
-<table class="table table-striped">
-<% @items.each do |item| %>
-	<% if item.completed == false %>
-		<%= render item %>
-	<% end %>
+<div class="span5">
+<% if user_signed_in? && current_user == @user %>
+	<%= render 'lists/user_sidebar' %>
+<% else %>
+	<%= render 'lists/follower_sidebar' %>
 <% end %>
-</table>
-
-<% if current_user == @user %>
-	<%= render 'items/form' %>
-<% end %>
-
+</div>

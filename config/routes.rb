@@ -10,7 +10,8 @@ Happyfuntodo::Application.routes.draw do
   get "users/:id/unsubscribe" => 'users#unsubscribe_to_email', :as => :unsubscribe
   post "lists/invite" => 'lists#invite_user', :as => :invite
   post "users/follow/" => 'user#create_follower', :as => :follow
-
+  get "users/unfollow" => 'user#unfollow_user', :as => :unfollow
+  
   as :user do
     get "/login" => "devise/sessions#new"
     delete "/logout" => "devise/sessions#destroy"

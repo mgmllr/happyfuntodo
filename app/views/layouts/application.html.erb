@@ -67,13 +67,7 @@
     <div class="container">
       <div class="content">
         <div class="row">
-          <div class="span7 todo-main" >
-            <%= bootstrap_flash %>
             <%= yield %>
-          </div>
-            <% if user_signed_in? %>
-              <%= render "lists/sidebar" %>
-            <% end %>
         </div><!--/row-->
       </div><!--/content-->
       <hr>
