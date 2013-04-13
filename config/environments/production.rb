@@ -76,7 +76,7 @@ Happyfuntodo::Application.configure do
       :authentication       => 'plain',
       :enable_starttls_auto => true
   }
-  config.action_mailer.default_url_options = { :host => "happyfuntodoapp.heroku.com" }
+  config.action_mailer.default_url_options = { :host => "shrouded-scrubland-5674.herokuapp.com" }
 
 
 end
