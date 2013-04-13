@@ -11,6 +11,7 @@ end
 
 group :production do 
 	gem 'pg'
+  gem 'thin'
 end
 
 gem 'devise'
@@ -34,6 +35,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'heroku'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
