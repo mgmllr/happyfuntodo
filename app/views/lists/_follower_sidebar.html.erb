@@ -1,6 +1,10 @@
 <div class="well sidebar-nav">
   <ul class="nav nav-list">
-		<li class='nav-header'><%= link_to "Back To Your List", list_path(current_user.list) %></li>
-		<li class='nav header'><%= button_to "Unfollow List", unfollow_path(@list) %></li>
+		<li class='nav-header follower'><%= link_to "Back To Your List", list_path(current_user.list) %></li>
+	</ul>
+</div>
+<div class="well sidebar-nav">
+  <ul class="nav nav-list">
+		<li class='nav-header follower'><%= link_to "Unfollow #{@user.name}", unfollow_path(@list), method: :post %></li>
 	</ul>
 </div>

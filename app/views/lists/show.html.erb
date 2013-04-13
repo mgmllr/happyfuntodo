@@ -1,11 +1,12 @@
 <div class="span7 todo-main" >
+	<div class="well">
   <%= bootstrap_flash %>
   
   <div class="headline">
-		<h1>To Do!</h1>
+		<h1><%= @user.name %>'s To Do's!</h1>
 	</div>
 
-	<table class="table table-striped">
+	<table class="table table-striped table-bordered">
 	<% @items.each do |item| %>
 		<% if item.completed == false %>
 			<%= render item %>
@@ -16,6 +17,7 @@
 	<% if current_user == @user %>
 		<%= render 'items/form' %>
 	<% end %>
+	</div>
 </div>
 
 <div class="span5">

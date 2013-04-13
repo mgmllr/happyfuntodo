@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410135158) do
+ActiveRecord::Schema.define(:version => 20130413171759) do
 
   create_table "items", :force => true do |t|
     t.string   "task"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20130410135158) do
     t.string   "provider"
     t.string   "uid"
     t.boolean  "email_subscription",     :default => true
+    t.string   "name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

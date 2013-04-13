@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :provider, :uid, :oauth_token, :oauth_expires_at, :email_subscription
+  attr_accessible :email, :password, :name, :password_confirmation, :remember_me, :provider, :uid, :oauth_token, :oauth_expires_at, :email_subscription
   # attr_accessible :title, :body
 
   has_one :list, dependent: :destroy
@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
         user.update_attributes(:provider => auth.provider, :uid => auth.uid)
       else
         user = User.create!(
+          name: auth.name,
           provider: auth.provider,
           uid: auth.uid,
           email: auth.info.email,

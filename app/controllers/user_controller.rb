@@ -20,8 +20,12 @@ class UserController < ApplicationController
   def create_follower
     @user = current_user
     @follower = User.find_by_email(params[:follower])
-    @follower.follow!(@user)
-    redirect_to list_path(current_user.list)
+    if @follower
+      @follower.follow!(@user)
+      redirect_to list_path(current_user.list)
+    else
+      redirect_to list_path(current_user.list), :flash => {:error => "#{params[:follower]} is not a user. Cannot follow him or her."}
+    end
   end
 
   def unfollow_user
