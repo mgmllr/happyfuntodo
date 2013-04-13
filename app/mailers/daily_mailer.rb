@@ -7,9 +7,10 @@ class DailyMailer < ActionMailer::Base
   #   en.daily_mailer.items_remaining.subject
   #
   def daily_update(user)
-    @recently_completed = user.list.items.recently_completed
-    @uncompleted = user.list.items.uncompleted
+    @user = user
+    @recently_completed = @user.list.items.recently_completed
+    @uncompleted = @user.list.items.uncompleted
 
-    mail to: user.email, subject: "Your Happy Fun Daily Tasks Update"
+    mail to: user.email, subject: "Your Happy Fun Daily Tasks Update", content_type: "text/html"
   end
 end

@@ -8,6 +8,13 @@ class UserController < ApplicationController
   def unsubscribe_to_email
   	@user = User.find(params[:id])
   	@user.email_subscription = false
+    @user.save
+
+    if @user.save
+      redirect_to list_path(current_user.list), :flash => {:notice => "You have been successfully unsusbscribed from daily emails."}
+    else
+      redirect_to list_path(current_user.list), :flash => {:error => "Sorry, we couldn't unsubscribe you at this time. Please try again."}
+    end
   end
 
   def create_follower
@@ -18,8 +25,10 @@ class UserController < ApplicationController
   end
 
   def unfollow_user
-    @follower = User.find(params[:follower])
-    @user = User.find(params[:id])
-    @follower.unfollow!(@user)
+    list = List.find(params[:list_id])
+    @followed = User.find(list.user_id)
+    @user = current_user
+    @user.unfollow!(@followed)
+    redirect_to list_path(current_user.list)
   end
 end

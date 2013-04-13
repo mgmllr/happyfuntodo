@@ -1,14 +1,56 @@
-<h1>Greetings!!</h1>
-<p>Here's what you accomplished today:</p>
-<ul>
-	<% @recently_completed.each do |i| %>	
-		<li><%= i.task %><li>
-	<% end %>	
-</ul>
-	
-<p>And here are the tasks you have yet to accomplish:</p>
-<ul>
-	<% @uncompleted.each do |i| %>
-		<li><%= i.task %><li>
-	<% end %>
-</ul>
+<!DOCTYPE html>
+<htmL>
+	<head>
+		<meta content="text/html" charset="UTF-8" http-equiv="Content-Type" />
+			<style type="text/css">
+			.container {
+				width: 90%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.header {
+				width: 100%;
+				margin-left: auto;
+				margin-left: auto;
+			}
+			.message {
+				width: 70%;
+				margin-left: auto;
+				margin-left: auto;
+			}
+			h1 {
+				font-size: 30;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="header">
+				<h1>Greetings!!</h1>
+			</div>
+			<div class="message">
+				<div class="accomplished">
+					<p>Here's what you accomplished today:</p>
+					<ul>
+						<% @recently_completed.each do |item| %>	
+							<li><%= item.task %></li>
+						<% end %>	
+					</ul>
+				</div>
+				<div class="unaccomplished">
+					<p>And here are the tasks you have yet to accomplish:</p>
+					<ul>
+						<% @uncompleted.each do |item| %>
+							<li><%= item.task %></li>
+						<% end %>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<footer>
+			<p>Prefer to no longer receive these updates? <%= link_to "UNSUBSCRIBE", unsubscribe_url(@user) %></p>
+		</footer>
+	</body>
+</html>
