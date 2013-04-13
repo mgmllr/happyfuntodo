@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
         user.update_attributes(:provider => auth.provider, :uid => auth.uid)
       else
         user = User.create!(
-          name: auth.name,
+          name: auth.info.first_name,
           provider: auth.provider,
           uid: auth.uid,
           email: auth.info.email,
