@@ -19,6 +19,10 @@
 
 # Learn more: http://github.com/javan/whenever
 
+every 5.minutes, :at
+	runner "User.daily_notification"
+end
+
 every 1.day, :at => '2:30 am' do
   runner "User.daily_notification"
 end
