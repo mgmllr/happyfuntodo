@@ -1,2 +1,4 @@
-$('tbody').append("<%= escape_javascript(render @item) %>");
-$('div.field input').val('');
+$(document).ready(){
+	$('tbody').append("<%= escape_javascript(render @item) %>");
+	$('div.field input').val('');
+};
