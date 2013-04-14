@@ -10,27 +10,11 @@ class ItemsController < ApplicationController
     end
   end
 
-  #def find_user
-  #  @user = User.find(@list.user_id)
-  #end
-
   # Create a new To Do list item
   def create
     @item = Item.new(params[:item])
     @item.list_id = params[:id]
     @item.save
-
-    #respond_to do |format|
-    #  if @item.save
-    #    format.html { redirect_to list_path(@list), notice: 'Item was successfully created.' }
-    #    format.json { render json: @item, status: :created, location: @item }
-    #  else
-    #    format.html { redirect_to list_path(@list), notice: 'Could not add item at the time. Please try again.'}
-    #    format.json { render json: @item.errors, status: :unprocessable_entity }
-    #  end
-    #  format.js
-    #end
-    #
 
     respond_to do |format|
       if @item.save
@@ -47,7 +31,7 @@ class ItemsController < ApplicationController
     @item.completed = true
     @item.completed_at = Time.now
     @item.save
-    # redirect_to list_path(@list)
+
     respond_to do |format|
       format.js
     end
