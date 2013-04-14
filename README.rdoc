@@ -2,11 +2,11 @@
 
 This is a beta version of a simple social To Do application with the following functionality:
 
-—Facebook authentication through Devise / Omniauth
-—AJAX-based to do lists, with items that can me marked as complete
-—Daily email notifications informing users of the tasks they completed in the previous day and others yet to be completed
-—Ability to grant existing members read-only access to one's own list
-—Ability to unsubscribe from lists
+1. Facebook authentication through Devise / Omniauth
+2. AJAX-based to do lists, with items that can me marked as complete
+3. Daily email notifications informing users of the tasks they completed in the previous day and others yet to be completed
+4. Ability to grant existing members read-only access to one's own list
+5. Ability to unsubscribe from lists
 
 == Future Fixes
 
