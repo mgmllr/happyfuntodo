@@ -17,7 +17,6 @@ end
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
-gem 'whenever', :require => false
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -35,7 +34,6 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem 'heroku'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
